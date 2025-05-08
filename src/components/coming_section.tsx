@@ -5,7 +5,7 @@ export default function ComingSection() {
   const overlays = ['#47CB7E', '#F86A93']; // Couleurs du demi-cercle
 
   return (
-    <div className="bg-[#1E1E1E] py-20 mt-15">
+    <div className="bg-[#1E1E1E] py-20">
       <div className="container mx-auto px-4">
         {/* Header & Nav */}
         <div className="w-full text-white mb-20">
@@ -27,7 +27,7 @@ export default function ComingSection() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-2 gap-x-24 gap-y-24">
+        <div className="grid  grid-cols-1 sm:grid-cols-2 gap-x-24 gap-y-24">
           {[...Array(4)].map((_, i) => {
             const row = Math.floor(i / 2); // 0 or 1
             return (

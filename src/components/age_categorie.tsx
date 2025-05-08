@@ -1,14 +1,14 @@
-// components/AgeCategories.tsx
+'use client';
+
 import React from 'react';
-import Image from 'next/image';
 
 interface AgeCategory {
   id: number;
   title: string;
   ageRange: string;
   description: string;
-  imageUrl: string; // Nouveau champ pour l'image
-  imageAlt: string; // Texte alternatif
+  imageUrl: string;
+  imageAlt: string;
 }
 
 const ageCategories: AgeCategory[] = [
@@ -43,34 +43,34 @@ const ageCategories: AgeCategory[] = [
 
 const AgeCategories = () => {
   return (
-    <section className="container mx-auto">
-        <div className="bg-[#1E1E1E] p-14 rounded-4xl text-white">
-            <h2 className="font-inter font-bold text-[45px] leading-[100%] tracking-[0] mb-10 pl-0">
-            Nos catégories d'âge
-            </h2>
+    <section className="container mx-auto px-4">
+      <div className="bg-[#1E1E1E] p-6 sm:p-10 md:p-14 rounded-3xl text-white">
+        <h2 className="font-inter font-bold text-3xl md:text-[45px] mb-10">
+          Nos catégories d'âge
+        </h2>
 
-            <div className="flex justify-center gap-x-24">
-            {ageCategories.map((category, index) => (
-                <div key={index} className="w-[410px] flex-shrink-0">
-                <div className="mb-6 overflow-hidden rounded-xl">
-                    <img
-                    src={category.imageUrl}
-                    alt={category.title}
-                    className="w-full h-64 object-cover"
-                    />
-                </div>
-                <div>
-                    <h3 className="font-inter font-bold text-[24px] leading-[100%] tracking-[0] mb-4">
-                    {category.title} ({category.ageRange})
-                    </h3>
-                    <p className="font-inter text-[18px] leading-relaxed">
-                    {category.description}
-                    </p>
-                </div>
-                </div>
-            ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+          {ageCategories.map((category) => (
+            <div key={category.id} className="w-full">
+              <div className="mb-6 overflow-hidden rounded-xl">
+                <img
+                  src={category.imageUrl}
+                  alt={category.imageAlt}
+                  className="w-full h-64 object-cover rounded-xl"
+                />
+              </div>
+              <div>
+                <h3 className="font-inter font-bold text-xl md:text-[24px] mb-4">
+                  {category.title} ({category.ageRange})
+                </h3>
+                <p className="font-inter text-base md:text-[18px] leading-relaxed">
+                  {category.description}
+                </p>
+              </div>
             </div>
+          ))}
         </div>
+      </div>
     </section>
   );
 };

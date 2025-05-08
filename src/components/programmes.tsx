@@ -51,7 +51,7 @@ const ProgramList = () => {
       {programs.map((program) => (
         <div
           key={program.id}
-          className={`flex flex-col md:flex-row items-center gap-16 p-10 ${program.id % 2 === 0 ? 'bg-white' : 'bg-[#F4F4F4]'
+          className={`flex flex-col lg:flex-row items-center gap-6 md:gap-12 p-6 md:p-10 ${program.id % 2 === 0 ? 'bg-white' : 'bg-[#F4F4F4]'
             }`}
         >
           {/* Image */}
@@ -62,7 +62,7 @@ const ProgramList = () => {
           />
 
           {/* Text Content */}
-          <div className="w-full md:w-2/3 space-y-4 relative">
+          <div className="w-full md:w-1/2 lg:w-3/5 space-y-4 relative">
             {/* Title Block */}
             <div className={`relative mb-8 flex items-center justify-between rounded-xl text-white font-bold text-[32px] px-10 py-5 overflow-hidden ${program.id % 2 === 0 ? 'bg-[#1E1E1E]' : 'bg-[#BC208E]'
                 } w-full`}>

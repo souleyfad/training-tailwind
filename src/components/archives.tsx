@@ -56,7 +56,7 @@ const ArchivesList = () => {
     return (
         <section className="container mx-auto mb-10">
             <h2 className="text-[45px] font-bold text-center p-10">Nos archives</h2>
-            <div className="grid grid-cols-2 gap-x-24 gap-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-24 gap-y-8">
                 {archives.map((item) => (
                     <div className="p-2">
                         {/* Image */}

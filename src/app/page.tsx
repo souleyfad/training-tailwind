@@ -14,14 +14,14 @@ import Footer from "@/components/layout/footer";
 export default function Home() {
   return (
     <main className="min-h-screen scroll-smooth">
-      <div className="container mx-auto px-2 bg-gradient-to-br">
+      <div className="container mx-auto px-4 md:px-2 bg-gradient-to-br">
         <Header />
         <Banner></Banner>
       </div>
       <div id="about">
         <About></About>
       </div>
-      <div className="bg-white mx-auto px-2 p-16">
+      <div className="bg-white mx-auto px-4 md:px-2 p-16">
         <AgeCategories></AgeCategories>
       </div>
       <div id="programmes">

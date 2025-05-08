@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <div className="bg-[#1E1E1E] py-20 mt-15">
+    <div className="bg-[#1E1E1E] py-12 md:py-20 mt-15">
       {/* Container centré */}
-      <div className="container mx-auto px-4 flex flex-col  md:flex-row items-end gap-24">
+      <div className="container mx-auto px-4 flex flex-col  md:flex-row items-end gap-8 md:gap-24">
         {/* Image redimensionnée */}
         <img 
               src="/image_perso/about.png" // Chemin relatif depuis le dossier public
@@ -13,7 +13,7 @@ export default function About() {
             />
 
         {/* Texte */}
-        <div className="w-full md:w-[45%] text-white mb-20">
+        <div className="w-full md:w-[45%] text-white mb-8 md:mb-20">
           <h1 className="font-inter font-bold text-[45px] leading-[100%] tracking-[0] mb-8">
             Qui sommes-nous ?
           </h1>

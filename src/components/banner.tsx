@@ -7,9 +7,9 @@ export default function Banner() {
   const [search, setSearch] = useState('');
 
   return (
-    <section className="text-center pt-20">
+    <section className="text-center pt-10">
       {/* Titre principal */}
-      <h1 className="font-inter font-bold text-[45px] leading-[100%] tracking-[0] text-black">
+      <h1 className="font-inter font-bold text-[35px] md:text-[45px] leading-[100%] tracking-[0] text-black">
         Les filles s'amusent et l'apprentissage
       </h1>
 
@@ -20,21 +20,22 @@ export default function Banner() {
       </p>
 
       {/* Espace vertical */}
-      <div className="mt-10 flex justify-center">
+      <div className="mt-8 md:mt-10 flex justify-center">
         {/* Boîte de recherche */}
-        <div className="flex items-center rounded-full px-4 py-4 shadow-sm bg-white w-full max-w-md">
+        <div className="flex items-center rounded-full px-16 md:px-4 py-4 shadow-sm bg-white w-full max-w-sm md:max-w-md">
           <input
             type="text"
             placeholder="Rechercher ici..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-grow outline-none bg-transparent text-gray-800 placeholder-gray-400 px-4 text-sm"
+            className="flex-grow outline-none bg-transparent text-gray-800 placeholder-gray-400 px-4 text-sm truncate"
           />
           <button className="bg-white text-[#BC208E] border border-[#BC208E] py-3 px-6 rounded-full text-sm font-medium hover:bg-[#BC208E] hover:text-white transition">
             Rechercher
           </button>
         </div>
       </div>
+
       <div className="mt-16 flex justify-center">
         <Image
           src="/image_perso/banner.png"
