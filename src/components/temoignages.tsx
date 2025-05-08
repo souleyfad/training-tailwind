@@ -1,7 +1,7 @@
 'use client';
 
 import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const testimonials = [
   {
@@ -35,30 +35,47 @@ const testimonials = [
 
 export default function Temoignages() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on('select', onSelect);
+    setScrollSnaps(emblaApi.scrollSnapList());
+    onSelect(); // Init
+  }, [emblaApi]);
 
   return (
     <section className="py-16 bg-[#F9F9F9] px-4">
-      <h2 className="text-3xl md:text-[45px] font-bold text-center mb-10">
+      <h2 className="text-3xl md:text-[45px] font-bold text-center mb-6">
         Témoignages
       </h2>
 
-      <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center md:gap-16">
+      <div className="flex items-center justify-center gap-6 md:gap-16">
+        {/* Flèche gauche - visible md+ */}
         <button
           onClick={scrollPrev}
-          className="text-[#BC208E] text-4xl md:text-6xl cursor-pointer"
+          className="hidden md:inline text-[#BC208E] text-4xl md:text-6xl cursor-pointer"
         >
           ‹
         </button>
 
+        {/* Carrousel */}
         <div className="overflow-hidden w-full max-w-5xl" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((item, index) => (
               <div
                 key={index}
-                className="min-w-full flex flex-col md:flex-row items-center gap-6 md:gap-16 p-6 box-border"
+                className="min-w-full flex flex-col md:flex-row items-center gap-6 md:gap-12 p-6 box-border"
               >
                 <img
                   src={item.image}
@@ -77,12 +94,26 @@ export default function Temoignages() {
           </div>
         </div>
 
+        {/* Flèche droite - visible md+ */}
         <button
           onClick={scrollNext}
-          className="text-[#BC208E] text-4xl md:text-6xl cursor-pointer"
+          className="hidden md:inline text-[#BC208E] text-4xl md:text-6xl cursor-pointer"
         >
           ›
         </button>
+      </div>
+
+      {/* Dots mobile only */}
+      <div className="flex justify-center gap-2 mt-6 md:hidden">
+        {scrollSnaps.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`w-3 h-3 rounded-full ${
+              index === selectedIndex ? 'bg-[#BC208E]' : 'bg-gray-400'
+            } transition`}
+          />
+        ))}
       </div>
     </section>
   );

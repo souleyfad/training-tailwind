@@ -22,7 +22,7 @@ export default function Banner() {
       {/* Espace vertical */}
       <div className="mt-8 md:mt-10 flex justify-center">
         {/* Boîte de recherche */}
-        <div className="flex items-center rounded-full px-16 md:px-4 py-4 shadow-sm bg-white w-full max-w-sm md:max-w-md">
+        <div className="flex items-center rounded-full px-4 py-4 shadow-sm bg-white w-full max-w-sm md:max-w-md">
           <input
             type="text"
             placeholder="Rechercher ici..."
