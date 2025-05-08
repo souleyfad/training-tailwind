@@ -28,5 +28,6 @@ body {
   min-height: 100vh;
   background-attachment: fixed;
   font-family: "Inter", Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 

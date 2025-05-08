@@ -20,17 +20,16 @@ export default function Banner() {
       </p>
 
       {/* Espace vertical */}
-      <div className="mt-8 md:mt-10 flex justify-center">
-        {/* Boîte de recherche */}
-        <div className="flex items-center rounded-full px-4 py-4 shadow-sm bg-white w-full max-w-sm md:max-w-md">
+      <div className="mt-8 flex justify-center">
+        <div className="flex gap-2 w-full max-w-sm md:max-w-md bg-white rounded-full shadow items-center p-4 h-18">
           <input
             type="text"
             placeholder="Rechercher ici..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-grow outline-none bg-transparent text-gray-800 placeholder-gray-400 px-4 text-sm truncate"
+            className="flex-grow bg-transparent text-sm outline-none text-gray-800 placeholder-gray-400"
           />
-          <button className="bg-white text-[#BC208E] border border-[#BC208E] py-3 px-6 rounded-full text-sm font-medium hover:bg-[#BC208E] hover:text-white transition">
+          <button className="h-full px-4 text-sm font-medium border border-[#BC208E] text-[#BC208E] bg-white hover:bg-[#BC208E] hover:text-white rounded-full transition">
             Rechercher
           </button>
         </div>
