@@ -20,20 +20,21 @@ export default function Banner() {
       </p>
 
       {/* Espace vertical */}
-      <div className="mt-8 flex justify-center">
-        <div className="flex gap-2 w-full max-w-sm md:max-w-md bg-white rounded-full shadow items-center p-4 h-18">
-          <input
-            type="text"
-            placeholder="Rechercher ici..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="flex-grow bg-transparent text-sm outline-none text-gray-800 placeholder-gray-400"
-          />
-          <button className="h-full px-4 text-sm font-medium border border-[#BC208E] text-[#BC208E] bg-white hover:bg-[#BC208E] hover:text-white rounded-full transition">
-            Rechercher
-          </button>
-        </div>
-      </div>
+      <div className="mt-8 flex justify-center px-4">
+  <div className="flex gap-2 w-full max-w-sm md:max-w-md bg-white rounded-full shadow items-center p-2 md:p-4 h-14 md:h-18">
+    <input
+      type="text"
+      placeholder="Rechercher ici..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="flex-grow bg-transparent text-sm outline-none text-gray-800 placeholder-gray-400 px-2 md:px-0"
+    />
+    <button className="h-10 px-4 text-sm font-medium border border-[#BC208E] text-[#BC208E] bg-white hover:bg-[#BC208E] hover:text-white rounded-full transition whitespace-nowrap">
+      Rechercher
+    </button>
+  </div>
+</div>
+
 
       <div className="mt-16 flex justify-center">
         <Image
