@@ -31,8 +31,8 @@ export default function UserSession({
         onClick={() => setShowLogoutConfirm(!showLogoutConfirm)}
         className={`flex items-center space-x-2 ${
           isMobile 
-            ? "w-full justify-center py-2 rounded-full bg-gray-100 hover:bg-gray-200" 
-            : "px-3 py-2 rounded-full hover:bg-gray-100"
+            ? "w-full justify-center py-2 rounded-full bg-[#BC208E] hover:bg-[#a31c7b] text-white" 
+            : "px-3 py-2 rounded-full bg-[#BC208E] hover:bg-[#a31c7b] text-white"
         } transition`}
       >
         <span className="font-medium">

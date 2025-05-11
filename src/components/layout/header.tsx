@@ -49,13 +49,13 @@ export default function Header() {
             alt="KanKode Logo"
             className="h-10 w-auto"
           />
-          <span className="text-2xl font-bold">KanKode</span>
+          <a href="/" className="text-2xl font-bold">KanKode</a>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8 font-inter">
+        <a href="/programmes" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Nos programmes</a>
           <a href="#about" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">À propos</a>
-          <a href="#programmes" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Nos programmes</a>
           <a href="#news" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">News</a>
         </nav>
 
@@ -110,8 +110,8 @@ export default function Header() {
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-4 bg-white rounded-b-lg shadow">
           <nav className="flex flex-col space-y-2">
+            <a href="/programmes" className="text-gray-700 hover:text-purple-600 font-medium">Nos programmes</a>
             <a href="#about" className="text-gray-700 hover:text-purple-600 font-medium">À propos</a>
-            <a href="#programmes" className="text-gray-700 hover:text-purple-600 font-medium">Nos programmes</a>
             <a href="#news" className="text-gray-700 hover:text-purple-600 font-medium">News</a>
           </nav>
 
