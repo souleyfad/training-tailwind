@@ -1,13 +1,70 @@
 'use client';
 
+
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
+} from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../../firebase.config';
 import { useState } from 'react';
-import { FaGoogle } from 'react-icons/fa';
-import { RxCross2 } from 'react-icons/rx';
+import { useRouter } from 'next/navigation';
 
 export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     if (!isOpen) return null;
+
+    const handleEmailAuth = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+
+        try {
+            if (activeTab === 'login') {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log("Utilisateur connecté:", userCredential.user);
+            } else {
+                // Inscription
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                // Stockage des infos supplémentaires dans Firestore
+                await setDoc(doc(db, 'users', userCredential.user.uid), {
+                    fullName,
+                    streetAddress,
+                    email,
+                    createdAt: new Date(),
+                  });
+                
+                await signInWithEmailAndPassword(auth, email, password);
+            }
+            onClose();
+            router.refresh(); // Rafraîchir la page après connexion
+        } catch (err: any) {
+            setError(err.message);
+            console.error("Erreur d'authentification:", err);
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            await signInWithPopup(auth, provider);
+            onClose();
+            router.refresh();
+        } catch (err: any) {
+            setError(err.message);
+            console.error("Erreur de connexion Google:", err);
+        }
+    };
+
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4">
@@ -45,7 +102,9 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
                 <div className="border-b border-gray-300 -mx-6" />
 
                 {/* Google Login */}
-                <button className="w-full bg-[#F0F8F1] hover:bg-gray-200 py-4 rounded-md flex items-center justify-center space-x-4 mb-10 mt-8 shadow-md">
+                <button
+                    onClick={handleGoogleSignIn}
+                    className="w-full bg-[#F0F8F1] hover:bg-gray-200 py-4 rounded-md flex items-center justify-center space-x-4 mb-10 mt-8 shadow-md">
                     <svg
                         className="w-5 h-5 mr-2"
                         viewBox="0 0 533.5 544.3"
@@ -56,21 +115,36 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
                         <path fill="#fbbc04" d="M121.5 327.2c-10.4-30.7-10.4-63.7 0-94.4V163.2H33.5c-35.3 70.4-35.3 153.3 0 223.6l88-69.6z" />
                         <path fill="#ea4335" d="M272 107.7c38.9-.6 76 13.6 104.5 39.2l78.2-78.2C406.9 24.3 341.3 0 272 0 169 0 78 59.2 33.5 147.5l88 69.6c21.1-63.4 80.4-109.6 150.5-109.4z" />
                     </svg>
-                    <span className="font-bold text-[16px]">Log in with Google</span>
+                    <span className="font-bold text-[16px]">
+                        {activeTab === 'login' ? 'Log in with Google' : 'Register with Google'}
+                    </span>
                 </button>
+
+                {/* Affichage des erreurs */}
+                {error && (
+                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+                        {error}
+                    </div>
+                )}
 
                 {/* Email Login */}
                 {activeTab === 'login' ? (
-                    <form className="space-y-3">
+                    <form onSubmit={handleEmailAuth} className="space-y-3">
 
                         <p className="font-bold text-[16px] mb-6">Se connecter avec l’email</p>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Phone number / Email Address</label>
-                            <input type="text" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" required />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mt-1">Password</label>
-                            <input type="password" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" required />
                         </div>
                         <div className="flex justify-between items-center text-sm mb-3">
                             <label className="flex items-center space-x-2">
@@ -82,24 +156,36 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
                         <button type="submit" className="w-full bg-[#BC208E] text-white rounded-[8px] py-4">Login</button>
                     </form>
                 ) : (
-                    <form className="space-y-4">
+                    <form onSubmit={handleEmailAuth} className="space-y-4">
 
                         <p className="font-bold text-[16px] mb-6">Rejoindre Kankode</p>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                            <input type="email" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="text"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Street Address</label>
-                            <input type="password" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="text"
+                                value={streetAddress}
+                                onChange={(e) => setStreetAddress(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" className="w-full border rounded-[8px] px-3 py-4 mt-1" />
+                            <input type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full border rounded-[8px] px-3 py-4 mt-1" />
                         </div>
                         <button type="submit" className="w-full bg-[#BC208E] text-white rounded-[8px] py-4 mb-3">Register</button>
                         <label className="flex items-start space-x-2">

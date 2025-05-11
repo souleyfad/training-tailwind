@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaUser, FaSearch, FaBars, FaTimes } from 'react-icons/fa';
 import AuthModal from '../auth/auth_model';
+import { auth } from '../../../firebase.config';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import UserSession from './user_session';
 
 export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
@@ -10,11 +13,31 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  //for current user and logout
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const [currentUser, setCurrentUser] = useState<any>(null)
+
   useEffect(() => {
     if (showSearch && inputRef.current) {
       inputRef.current.focus();
     }
   }, [showSearch]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setShowLogoutConfirm(false);
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
+  };
 
   return (
     <header className="rounded-lg shadow-sm bg-white sticky top-0 z-50 mt-4">
@@ -54,6 +77,9 @@ export default function Header() {
             />
           </div>
 
+          {currentUser ? (
+          <UserSession currentUser={currentUser} />
+        ) : (
           <button
             onClick={() => setShowAuth(true)}
             className="flex items-center bg-[#BC208E] hover:bg-[#a31c7b] text-white px-5 py-2 rounded-full space-x-2 transition"
@@ -61,6 +87,8 @@ export default function Header() {
             <FaUser className="text-white text-sm" />
             <span className="text-sm font-medium">Sign In / Sign Up</span>
           </button>
+        )}
+          
 
           <div className="text-sm font-medium space-x-1">
             <span className="text-gray-800">EN</span>
@@ -89,13 +117,18 @@ export default function Header() {
 
           {/* Mobile Actions */}
           <div className="flex flex-col space-y-2">
-            <button
+          {currentUser ? (
+              <UserSession currentUser={currentUser} isMobile />
+            ) : (
+              <button
               onClick={() => setShowAuth(true)}
               className="flex items-center justify-center bg-[#BC208E] hover:bg-[#a31c7b] text-white py-2 rounded-full space-x-2 transition"
             >
               <FaUser className="text-white text-sm" />
               <span className="text-sm font-medium">Sign In / Sign Up</span>
             </button>
+            )}
+            
 
             <div className="flex justify-center space-x-2 text-sm font-medium">
               <span className="text-gray-800">EN</span>
