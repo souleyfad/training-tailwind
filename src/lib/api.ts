@@ -38,3 +38,10 @@ export async function deleteProgramme(id: string): Promise<void> {
   const res = await fetch(`${ENDPOINTS.PROGRAMS}/${id}`, { method: 'DELETE' });
   if (!res.ok) throw new Error("Erreur lors de la suppression");
 }
+
+export async function getProgrammeById(id: string): Promise<Programme> {
+  const res = await fetch(`${ENDPOINTS.PROGRAMS}/${id}`);
+  if (!res.ok) throw new Error('Programme non trouvé');
+  return res.json();
+}
+

@@ -6,6 +6,7 @@ import AuthModal from '../auth/auth_model';
 import { auth } from '../../../firebase.config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import UserSession from './user_session';
+import Link from 'next/link';
 
 export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
@@ -49,14 +50,14 @@ export default function Header() {
             alt="KanKode Logo"
             className="h-10 w-auto"
           />
-          <a href="/" className="text-2xl font-bold">KanKode</a>
+          <Link href="/" className="text-2xl font-bold">KanKode</Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8 font-inter">
-        <a href="/programmes" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Nos programmes</a>
-          <a href="#about" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">À propos</a>
-          <a href="#news" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">News</a>
+        <Link href="/programmes" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Nos programmes</Link>
+          <Link href="#about" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">À propos</Link>
+          <Link href="#news" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">News</Link>
         </nav>
 
         {/* Desktop Actions */}

@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import Header from "@/components/layout/header";
+import ImagePicker from './image_picker';
 import { Programme, getProgrammes, createProgramme } from '../../lib/api';
 import Link from 'next/link'
 import { FaSearch } from 'react-icons/fa';
@@ -17,6 +18,7 @@ export default function ProgrammesPage() {
     message: '',
     image: '',
   });
+
 
   const fetchData = async () => {
     try {
@@ -63,7 +65,7 @@ export default function ProgrammesPage() {
         </div>
       </div>
 
-      <div className="flex justify-between items-center mb-6 mt-6">
+      <div className="flex flex-col md:flex-row sm:items-center gap-2 justify-between items-center mb-6 mt-6">
         <div className='flex'>
           <div className="flex items-center w-full max-w-xl rounded-full bg-white shadow overflow-hidden">
             <div className="pl-4 text-gray-400">
@@ -86,11 +88,12 @@ export default function ProgrammesPage() {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-[#BC208E] hover:bg-[#a31c7b] text-white px-4 py-2 rounded-full text-sm font-medium"
+          className="w-full sm:w-auto bg-[#BC208E] hover:bg-[#a31c7b] text-white px-4 py-2 rounded-full text-sm font-medium"
         >
           + Ajouter un programme
         </button>
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {programmes.map((programme) => (
@@ -107,7 +110,7 @@ export default function ProgrammesPage() {
               </h3>
               <p className="text-sm text-gray-500 mb-4 line-clamp-3">{programme.message}</p>
               <Link
-                href="#"
+                href={`/programmes/${programme.id}`}
                 className="mt-auto inline-block bg-white border border-black text-black text-sm font-medium py-2 px-4 rounded hover:bg-black hover:text-white transition"
               >
                 En savoir plus
@@ -120,7 +123,7 @@ export default function ProgrammesPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0  bg-black/30 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-md w-full max-w-lg p-6 space-y-4">
+          <div className="bg-white rounded-lg shadow-md w-[95%] max-w-lg p-6 space-y-4 overflow-y-auto max-h-[90vh]">
             <h2 className="text-lg font-semibold">Ajouter un programme</h2>
 
             <input
@@ -139,14 +142,10 @@ export default function ProgrammesPage() {
               className="w-full border px-3 py-2 rounded text-sm"
             />
 
-            <input
-              type="text"
-              placeholder="URL de l'image"
+            <ImagePicker
               value={form.image}
-              onChange={(e) => setForm({ ...form, image: e.target.value })}
-              className="w-full border px-3 py-2 rounded text-sm"
+              onChange={(val) => setForm({ ...form, image: val })}
             />
-
             <textarea
               placeholder="Message"
               value={form.message}
