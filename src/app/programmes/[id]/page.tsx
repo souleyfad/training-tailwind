@@ -4,11 +4,14 @@ import { Programme } from '../../../lib/api';
 import { notFound } from 'next/navigation';
 import Header from "@/components/layout/header";
 
-type Props = {
-  params: { id: string };
-};
+// 🟩 Type correct pour App Router
+interface ProgrammeDetailPageProps {
+  params: {
+    id: string;
+  };
+}
 
-export default async function ProgrammeDetailPage({ params }: Props) {
+export default async function ProgrammeDetailPage({ params }: ProgrammeDetailPageProps) {
     let programme: Programme | null = null;
 
     try {
