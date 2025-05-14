@@ -4,7 +4,11 @@ import { Programme } from '../../../lib/api';
 import { notFound } from 'next/navigation';
 import Header from "@/components/layout/header";
 
-export default async function ProgrammeDetailPage({ params }: { params: { id: string } }) {
+type Props = {
+  params: { id: string };
+};
+
+export default async function ProgrammeDetailPage({ params }: Props) {
     let programme: Programme | null = null;
 
     try {
