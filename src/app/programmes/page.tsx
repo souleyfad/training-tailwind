@@ -50,10 +50,6 @@ export default function ProgrammesPage() {
   return (
     <main className="container mx-auto px-4 md:px-2">
 
-      <div className="bg-gradient-to-br">
-        <Header />
-      </div>
-
       <div className="relative h-40 md:h-54 w-full rounded-lg overflow-hidden mb-10 mt-10">
         <img
           src="/image_perso/p2.png"
@@ -123,7 +119,7 @@ export default function ProgrammesPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0  bg-black/30 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-md w-[95%] max-w-lg p-6 space-y-4 overflow-y-auto max-h-[90vh]">
+          <div className="bg-white rounded-lg shadow-md w-[90%] max-w-lg p-6 space-y-4 overflow-y-auto max-h-[90vh]">
             <h2 className="text-lg font-semibold">Ajouter un programme</h2>
 
             <input

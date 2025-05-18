@@ -4,6 +4,7 @@ import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase.config';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function UserSession({ 
   currentUser,
@@ -13,6 +14,7 @@ export default function UserSession({
   isMobile?: boolean;
 }) {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const router = useRouter()
 
   const handleLogout = async () => {
     try {
@@ -28,17 +30,17 @@ export default function UserSession({
     <div className={isMobile ? "w-full" : "relative group"}>
       {/* Bouton principal */}
       <button
-        onClick={() => setShowLogoutConfirm(!showLogoutConfirm)}
+        onClick={() => router.push('/mon-compte')}
         className={`flex items-center space-x-2 ${
           isMobile 
             ? "w-full justify-center py-2 rounded-full bg-[#BC208E] hover:bg-[#a31c7b] text-white" 
             : "px-3 py-2 rounded-full bg-[#BC208E] hover:bg-[#a31c7b] text-white"
         } transition`}
       >
+        <FaUser className="text-white hover:text-[#BC208E]" />
         <span className="font-medium">
           {currentUser.displayName || currentUser.email?.split('@')[0]}
         </span>
-        <FaUser className="text-[#BC208E]" />
       </button>
       
       {/* Confirmation de déconnexion */}

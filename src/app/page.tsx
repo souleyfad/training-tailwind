@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Header from "@/components/layout/header";
 import Banner from "@/components/banner";
 import About from "@/components/about";
 import AgeCategories from "@/components/age_categorie";
@@ -9,13 +8,11 @@ import Temoignages from "@/components/temoignages";
 import Partener from "@/components/partener";
 import ArchivesList from "@/components/archives";
 import InfoSection from "@/components/infosection";
-import Footer from "@/components/layout/footer";
 
 export default function Home() {
   return (
     <main className="min-h-screen scroll-smooth">
       <div className="container mx-auto px-4 md:px-2 bg-gradient-to-br">
-        <Header />
         <Banner></Banner>
       </div>
       <div id="about">
@@ -36,7 +33,6 @@ export default function Home() {
         <ArchivesList></ArchivesList>
       </div>
       <InfoSection></InfoSection>
-      <Footer></Footer>
     </main>
   );
 }
